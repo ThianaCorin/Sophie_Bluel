@@ -1,4 +1,4 @@
-// Récupèrer works de l'API - fetch a besoin de la fonction async
+// Récupèrer works de l'API - (fetch a besoin de la fonction async)
 
 async function loadWorks() {
   const response = await fetch('http://localhost:5678/api/works');
