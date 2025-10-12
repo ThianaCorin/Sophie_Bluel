@@ -14,7 +14,7 @@ fetchWorks();
 
 
 // ==========================
-// Fonction d'affichage des works (avec filtre optionnel)
+// Fonction d'affichage des works (avec filtre optionnel). On met "0" par défaut
 // ==========================
 function loadWorks(filterId = "0") {
   const gallery = document.querySelector(".gallery");

@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -47,16 +48,22 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
-body {
-	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
-	font-size: 14px;
+
+
+main {
+  max-width: 1140px;
+  margin: auto; /* centre le contenu */
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px auto 0 auto; /* espace de 50px au-dessus */
+}
+
+header,
+main {
+  max-width: 1140px;
+  
 }
 section {
 	margin: 50px 0
@@ -93,6 +100,11 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+nav a {
+  color: inherit;          /* garde la même couleur que le texte du <li> */
+  text-decoration: none;   /* enlève le soulignement */
 }
 
 li:hover {
@@ -207,9 +219,21 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+
+footer {
+  background-color: #fff;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.footer-content {
+  max-width: 1140px;   /* même largeur que main et header */
+  margin: 0 auto;      /* centre le contenu */
+}
+
 footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em
+  display: flex;
+  justify-content: flex-end;
+  margin: 2em;
 }
 
