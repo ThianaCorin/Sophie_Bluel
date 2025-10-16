@@ -3,7 +3,11 @@
 // ==========================
 let works = [];
 
+// ==========================
 // (Await a besoin d'une fonction async)
+// GET est le verbe utilisé par défaut sur la fonction fetch
+// ==========================
+
 async function fetchWorks() {
   const response = await fetch("http://localhost:5678/api/works");
   works = await response.json();
