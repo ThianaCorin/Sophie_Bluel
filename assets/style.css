@@ -293,3 +293,12 @@ footer nav ul {
   text-decoration: underline;
   color: #3D3D3D;
 }
+
+/* Message d'erreur  */
+.error-message {
+  color: #93532F;
+  margin-top: -15px; /* remonte légèrement le message */
+  margin-bottom: 30px; /* ajoute un petit espace avant le lien "mot de passe oublié" */
+  font-family: 'Work Sans';
+  font-size: 14px;
+}
