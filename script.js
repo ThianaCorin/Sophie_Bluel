@@ -72,3 +72,56 @@ buttons.forEach(button => {
     loadWorks(category);
   });
 });
+
+// ==========================
+// Récupération du token, et s'il est différent de null:
+// Ajout du bandeau noir, filtres cachés, ajout du bouton Modifier
+// ==========================
+
+const token = localStorage.getItem("token")
+
+if (token) {
+let blackBanner = document.querySelector(".edition-mode")
+blackBanner.style.display = "flex";
+let filters = document.querySelector(".filters")
+filters.style.display = "none";
+let button = document.querySelector(".modifier")
+button.style.display = "flex";
+}
+
+// ==========================
+// Modale
+// on appelle seulement .modal car .modal-content est déjà à l'intérieur
+// ==========================
+
+const openModal = document.querySelector(".modifier button")
+
+openModal.addEventListener("click", () => {
+  console.log("click modal ok")
+  const modaleBackground = document.querySelector(".modal")
+  modaleBackground.style.display = "block";
+})
+
+const closeModal = document.querySelector(".modal-content button")
+
+closeModal.addEventListener("click", () => {
+  console.log("on ferme la modale")
+  const modaleBackground = document.querySelector(".modal")
+  modaleBackground.style.display = "none";
+})
+
+const externalClick = document.querySelector(".modal")
+
+externalClick.addEventListener("click", () => {
+  console.log("clic hors de la modale")
+  const modaleBackground = document.querySelector(".modal")
+  modaleBackground.style.display = "none";
+})
+
+const internalClick = document.querySelector(".modal-content")
+
+internalClick.addEventListener("click", (e) => {
+  console.log("clic dans de la modale")
+  e.stopPropagation()
+})
+

@@ -44,6 +44,7 @@ export function ajoutListenerLogin() {
 
     if (response.status === 200) {
     localStorage.setItem("token", data.token);
+    window.location.href = "index.html";
     } else {
     document.getElementById("login-error").innerHTML = "Une erreur est survenue, veuillez réessayer.";
     }
