@@ -91,6 +91,7 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -114,6 +115,12 @@ nav a.active {
 li:hover {
 	color: #B1663C;
 }
+
+/* Garde le pointeur de la souris sur le logout */
+#login {
+	cursor: pointer;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -362,22 +369,61 @@ footer nav ul {
 .modal-content {
 	position: relative;
 	width: 630px;
-	/* height: 300px;	 */
+	height: 600px;	
     top: 50%;
     left: 50%;
 	transform: translate(-50%, -50%);
+	align-content: center;
 	border-radius: 10px;
 	background-color: white;
 	z-index: 20;
-	display: flex;
-	;
-}
+	}
 
 .modal-content button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  	position: absolute;
+  	top: 25px;
+  	right: 25px;
+  	background: none;
+  	border: none;
+  	cursor: pointer;
+}
+
+.modal-content h3 {
+	font-family: 'Work Sans';
+	font-size: 26px;
+	color: black;
+    text-align: center;
+}
+.modal-gallery {
+	display: grid;
+	grid-template-columns: repeat(5,76px);
+	gap: 28px 9px;	
+	margin: 50px;
+	justify-content: center;
+}
+.modal-gallery img {
+	width: 76px;
+	height: 102px;
+}
+
+.modal-gallery figure {
+	position: relative;
+	width: 76px;   /* même largeur que l'image */
+	height: 102px; /* même hauteur que l'image */
+	margin: 0;     
+}
+
+.modal-gallery i {
+    position: absolute;
+    color: white;
+    background-color: black;
+    left: 50px;
+    top: 6px;
+    padding: 3px;
+    width: 14px;
+    height: 14px;
+    display: flex;
+	justify-content: center;
+    align-items: center;
+	border-radius: 3px;
 }

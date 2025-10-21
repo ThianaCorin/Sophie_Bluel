@@ -75,7 +75,7 @@ buttons.forEach(button => {
 
 // ==========================
 // Récupération du token, et s'il est différent de null:
-// Ajout du bandeau noir, filtres cachés, ajout du bouton Modifier
+// Ajout du bandeau noir, filtres cachés, ajout du bouton Modifier et logout
 // ==========================
 
 const token = localStorage.getItem("token")
@@ -87,8 +87,19 @@ let filters = document.querySelector(".filters")
 filters.style.display = "none";
 let button = document.querySelector(".modifier")
 button.style.display = "flex";
+let loginLogout = document.getElementById("login")
+loginLogout.textContent = "logout"
+loginLogout.removeAttribute("href");
 }
 
+// Logout du SubmitEvent, on enlève le token
+const loginLogout = document.getElementById("login")
+loginLogout.addEventListener("click", () => {
+  console.log("logout en cours");
+  localStorage.removeItem("token");
+  window.location.href = "index.html";
+
+})
 // ==========================
 // Modale
 // on appelle seulement .modal car .modal-content est déjà à l'intérieur
@@ -100,12 +111,14 @@ openModal.addEventListener("click", () => {
   console.log("click modal ok")
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "block";
+  // on appelle la fonction pour faire apparaitre les miniatures
+  loadWorksGallery();  
 })
 
 const closeModal = document.querySelector(".modal-content button")
 
 closeModal.addEventListener("click", () => {
-  console.log("on ferme la modale")
+  console.log("clic sur la croix")
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
 })
@@ -125,3 +138,23 @@ internalClick.addEventListener("click", (e) => {
   e.stopPropagation()
 })
 
+// Affichage des works miniature dans la modale; on fait la fonction et on l'appelle quand on
+// clique sur le bouton Modifier
+
+function loadWorksGallery() {
+  const modalGallery = document.querySelector(".modal-gallery");
+  modalGallery.innerHTML = ""; // vider la galerie avant d'ajouter les nouvelles images
+  
+  for (let i = 0; i < works.length; i++) {
+    const work = works[i];
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+    image.src = work.imageUrl;  
+    const trash = document.createElement("i")
+    trash.classList.add("fa-solid", "fa-trash-can", "fa-xs")
+
+    figure.appendChild(image);
+    figure.appendChild(trash);
+    modalGallery.appendChild(figure);
+  }
+}
