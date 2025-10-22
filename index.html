@@ -84,9 +84,39 @@
 </footer>
 <div class="modal">
 	<div class="modal-content">
-		<button><i class="fa-solid fa-xmark"></i></button>
-		<h3>Galerie photo</h3>
-		<div class="modal-gallery">
+		<!-- Vue 1 : suppression -->
+		<div class="modal-delete">
+			<button class="close"><i class="fa-solid fa-xmark"></i></button>
+			<h3>Galerie photo</h3>
+			<div class="modal-gallery"></div>
+			<hr>
+			<button class="add-photo">Ajouter une photo</button>
+		</div>	
+		<!-- Vue 2 : ajout -->
+		<div class="modal-add">
+			<button class="close"><i class="fa-solid fa-xmark"></i></button>
+			<button class="arrow-left"><i class="fa-solid fa-arrow-left"></i></button>
+			<h3>Ajout photo</h3>
+			<div class="image-add">
+				<i class="fa-regular fa-image fa-2xl"></i>
+				<button class="add-button">+  Ajouter photo</button>
+				<p>jpg, png : 4mo max</p>
+			</div>
+			<form class="add-form">			
+			<label for="titre">Titre</label>
+			<input type="text" name="titre" id="titre" required>
+            <label for="category">Catégorie</label>
+			<select name="category" id="category" required>
+			<option value="" selected hidden></option>
+			<option value="1">Objets</option>
+			<option value="2">Appartements</option>
+			<option value="3">Hotels & restaurants</option></select>
+			<p id="add-error" class="error-message"></p>
+            <hr>
+			<button type="submit" class="confirm">Valider</button>
+			</form>
+			
+			<p id="add-error" class="error-message"></p>
 		</div>
 	</div>
 </div>

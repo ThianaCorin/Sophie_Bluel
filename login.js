@@ -46,7 +46,7 @@ export function ajoutListenerLogin() {
     localStorage.setItem("token", data.token);
     window.location.href = "index.html";
     } else {
-    document.getElementById("login-error").innerHTML = "Une erreur est survenue, veuillez réessayer.";
+    document.getElementById("login-error").innerHTML = "Erreur dans l’identifiant ou le mot de passe.";
     }
     });
 }

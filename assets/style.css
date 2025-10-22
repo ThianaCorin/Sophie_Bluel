@@ -322,7 +322,7 @@ footer nav ul {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10;
     justify-content: center;
     gap: 8px;
 }
@@ -369,17 +369,21 @@ footer nav ul {
 .modal-content {
 	position: relative;
 	width: 630px;
-	height: 600px;	
-    top: 50%;
+	top: 50%;
     left: 50%;
 	transform: translate(-50%, -50%);
 	align-content: center;
 	border-radius: 10px;
 	background-color: white;
-	z-index: 20;
-	}
+	z-index: 20;    
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+	
 
-.modal-content button {
+button.close {
   	position: absolute;
   	top: 25px;
   	right: 25px;
@@ -426,4 +430,106 @@ footer nav ul {
 	justify-content: center;
     align-items: center;
 	border-radius: 3px;
+}
+
+button.add-photo {
+    background: #1D6154;
+    font-size: 14px;
+    font-family: 'Syne';
+    color: white;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+	margin-bottom: 40px;
+	border: none;
+}
+
+hr {
+    width: 420px;
+    margin-bottom: 38px;
+    border-top: 1px solid #B3B3B3;
+	margin-top: 10px;
+}
+
+ .modal-delete, .modal-add{
+	display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+	align-items: center;
+}
+
+.modal-delete {
+	display: none;
+}
+
+/* 2ème modale */
+
+.modal-add {
+  /* display: none; */
+}
+
+button.arrow-left {
+  	position: absolute;
+  	top: 25px;
+  	left: 25px;
+  	background: none;
+  	border: none;
+  	cursor: pointer;
+}
+
+button.confirm {
+    background: #A7A7A7;
+    font-size: 14px;
+    font-family: 'Syne';
+    color: white;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+	margin-bottom: 40px;
+	border: none;
+}
+
+.image-add {
+    background: #E8F1F6;
+    width: 420px;
+    height: 169px;
+    border-radius: 3px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+	margin-top: 40px;
+}
+
+.fa-2xl {
+    font-size: 76px;
+    color: #B9C5CC;
+	margin-top: 33px;
+}
+
+button.add-button {
+    background: #CBD6DC;
+    font-size: 14px;
+    font-family: 'Work Sans';
+    font-weight: 500;
+    color: #306685;
+    width: 173px;
+    height: 36px;
+    border-radius: 50px;
+    border: none;
+	margin-top: 48px;
+    margin-bottom: 8px;
+}
+
+.image-add p{
+	font-size: 10px;
+    font-family: 'Work Sans';
+    color: #444444;
+}
+
+.add-form {
+	display: flex;
+	flex-direction: column;
+	    margin-top: 30px;
+    margin-bottom: 30px;
 }
