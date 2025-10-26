@@ -4,6 +4,8 @@
 // (Await a besoin d'une fonction async)
 // GET est le verbe utilisé par défaut sur la fonction fetch
 // ==========================
+// DOMContentLoaded: le code sera exécuté une fois que le DOM est entièrement chargé
+document.addEventListener("DOMContentLoaded", () => {
 
 let works = [];
 
@@ -79,6 +81,7 @@ buttons.forEach(button => {
 // ==========================
 
 const token = localStorage.getItem("token")
+const loginLogout = document.getElementById("login")
 
 if (token) {
 let blackBanner = document.querySelector(".edition-mode")
@@ -87,13 +90,11 @@ let filters = document.querySelector(".filters")
 filters.style.display = "none";
 let button = document.querySelector(".modifier")
 button.style.display = "flex";
-let loginLogout = document.getElementById("login")
 loginLogout.textContent = "logout"
 loginLogout.removeAttribute("href");
 }
 
 // Logout du SubmitEvent, on enlève le token
-const loginLogout = document.getElementById("login")
 loginLogout.addEventListener("click", () => {
   console.log("logout en cours");
   localStorage.removeItem("token");
@@ -115,14 +116,18 @@ openModal.addEventListener("click", () => {
   loadWorksGallery();  
 })
 
-const closeModal = document.querySelector(".modal-content button")
+// Clique sur les croix pour fermer la modale
+const closeButtons = document.querySelectorAll(".close");
 
-closeModal.addEventListener("click", () => {
-  console.log("clic sur la croix")
+closeButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+        console.log("clic sur la croix")
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
 })
+})
 
+// Clique à l'éxtérieur de la modale pour la fermer
 const externalClick = document.querySelector(".modal")
 
 externalClick.addEventListener("click", () => {
@@ -131,6 +136,7 @@ externalClick.addEventListener("click", () => {
   modaleBackground.style.display = "none";
 })
 
+// Pour arrêter propagation de la règle à l'intérieur de la modale
 const internalClick = document.querySelector(".modal-content")
 
 internalClick.addEventListener("click", (e) => {
@@ -158,3 +164,149 @@ function loadWorksGallery() {
     modalGallery.appendChild(figure);
   }
 }
+
+// Clique "ajouter une photo" pour afficher la 2ème Vue
+const addPhoto = document.querySelector(".add-photo")
+
+addPhoto.addEventListener("click", () => {
+  console.log("clic ajouter une photo")
+  const modaleDelete = document.querySelector(".modal-delete")
+  modaleDelete.style.display = "none";
+  const modalAdd = document.querySelector(".modal-add")
+  modalAdd.style.display = "flex";
+})
+
+
+// 2ème vue
+
+// Clique sur la flèche-gauche pour revenir à la 1ère Vue
+const arrowLeft = document.querySelector(".arrow-left")
+
+arrowLeft.addEventListener("click", () => {
+  console.log("clic flèche gauche")
+  const modaleAdd = document.querySelector(".modal-add")
+  modaleAdd.style.display = "none";
+  const modaleDelete = document.querySelector(".modal-delete")
+  modaleDelete.style.display = "flex";
+})
+
+// Ajout d'un nouveau WORK
+const addButton = document.getElementById("add-button")
+const imageInput = document.getElementById("new-work")
+
+  addButton.addEventListener("click", () => {
+  console.log("clic pour ajouter photo");
+  document.getElementById("error-img").innerHTML = "";
+    imageInput.click()
+});
+
+ imageInput.addEventListener("change", () => {
+  const newWork = imageInput.files[0];
+  document.getElementById("error-img").innerHTML = ""; // reset du message précédent
+
+  if (!newWork) return; // sécurité si aucun fichier
+
+  // Vérifie le format
+  if (newWork.type !== "image/jpeg" && newWork.type !== "image/png") {
+    document.getElementById("error-img").innerHTML =
+      "L’image doit être au format JPG ou PNG et faire moins de 4 Mo.";
+    imageInput.value = ""; // vide le champ
+    return; // stop ici
+  }
+
+  // Vérifie la taille
+  if (newWork.size > 4194304) {
+    document.getElementById("error-img").innerHTML =
+      "L’image doit être au format JPG ou PNG et faire moins de 4 Mo.";
+    imageInput.value = ""; // vide le champ
+    return; // stop ici
+  }
+
+  // Si tout est bon → aperçu
+  const imageURL = URL.createObjectURL(newWork);
+  const miniature = document.createElement("img");
+  miniature.src = imageURL;
+
+  const showMiniature = document.querySelector(".image-add");
+  showMiniature.innerHTML = "";
+  showMiniature.appendChild(miniature);
+
+  const icone = document.querySelectorAll(".fa-image, .add-button, .info-message");
+  icone.forEach(element => (element.style.display = "none"));
+});
+
+// Récupèrer les catégories via l'API
+
+let categories = [];
+
+async function fetchCategories() {
+  const response = await fetch("http://localhost:5678/api/categories");
+  categories = await response.json();
+  SelectCategorie()
+}
+
+fetchCategories();
+
+function SelectCategorie() {
+  const select = document.getElementById("category");
+  select.innerHTML = "";
+  const empty = document.createElement("option")
+  empty.value = "";
+  empty.hidden = true;
+  empty.selected = true;
+  select.appendChild(empty);
+  
+for (let i = 0; i < categories.length; i++) {
+  const category = categories[i];
+  const option = document.createElement("option")
+    option.value = category.id
+    option.textContent = category.name
+    select.appendChild(option);
+}}
+
+// --- RÉFÉRENCES DES ÉLÉMENTS ---
+const titreInput = document.getElementById("titre");
+const categorySelect = document.getElementById("category");
+const confirmButton = document.querySelector(".confirm");
+
+// --- FONCTION DE VÉRIFICATION ---
+function checkFormCompletion() {
+  const titre = titreInput.value.trim();
+  const category = categorySelect.value;
+  const image = imageInput.files[0];
+
+  if (titre.length >= 3 && category !== "" && image) {
+    confirmButton.style.background = "#1D6154";
+  } else {
+    confirmButton.style.background = "#A7A7A7";
+  }
+}
+
+// --- ÉCOUTEURS ---
+titreInput.addEventListener("input", checkFormCompletion);
+categorySelect.addEventListener("change", checkFormCompletion);
+imageInput.addEventListener("change", checkFormCompletion);
+
+
+// --- VALIDATION FINALE DU FORMULAIRE ---
+const form = document.querySelector(".add-form");
+
+form.addEventListener("submit", (e) => {
+  const titre = titreInput.value.trim();
+  const category = categorySelect.value;
+  const image = imageInput.files[0];
+
+  if (titre.length < 3 || category === "" || !image) {
+    e.preventDefault(); // bloque l’envoi
+    document.getElementById("error-img").innerText =
+      "Veuillez remplir tous les champs avant de valider.";
+  } else {
+    console.log("Formulaire prêt à être envoyé !");
+    document.getElementById("error-img").innerText = "";
+  }
+})
+
+
+
+
+})

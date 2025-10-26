@@ -304,10 +304,11 @@ footer nav ul {
 /* Message d'erreur  */
 .error-message {
   color: #93532F;
-  margin-top: -15px; /* remonte légèrement le message */
-  margin-bottom: 30px; /* ajoute un petit espace avant le lien "mot de passe oublié" */
+  margin-bottom: 30px; 
   font-family: 'Work Sans';
   font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
 }
 
 /* Mode Edition  */
@@ -353,7 +354,7 @@ footer nav ul {
 }
 
 /* Modale */
-/* Il faut créer une classe avant la modale pour mettre le fond opaque */
+/* Il faut créer une classe avant la modale pour mettre le fond opaque; ensuite une pour chaque vue */
 
 .modal {
 	background-color: rgba(0, 0, 0, 0.3);
@@ -363,7 +364,7 @@ footer nav ul {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 10;
+	z-index: 15;
 }
 
 .modal-content {
@@ -382,7 +383,7 @@ footer nav ul {
     align-items: center;
 }
 	
-
+/* 1ère Vue */
 button.close {
   	position: absolute;
   	top: 25px;
@@ -398,6 +399,7 @@ button.close {
 	color: black;
     text-align: center;
 }
+
 .modal-gallery {
 	display: grid;
 	grid-template-columns: repeat(5,76px);
@@ -412,8 +414,8 @@ button.close {
 
 .modal-gallery figure {
 	position: relative;
-	width: 76px;   /* même largeur que l'image */
-	height: 102px; /* même hauteur que l'image */
+	width: 76px;   
+	height: 102px;
 	margin: 0;     
 }
 
@@ -458,14 +460,10 @@ hr {
 	align-items: center;
 }
 
-.modal-delete {
-	display: none;
-}
-
 /* 2ème modale */
 
 .modal-add {
-  /* display: none; */
+  display: none;
 }
 
 button.arrow-left {
@@ -475,18 +473,6 @@ button.arrow-left {
   	background: none;
   	border: none;
   	cursor: pointer;
-}
-
-button.confirm {
-    background: #A7A7A7;
-    font-size: 14px;
-    font-family: 'Syne';
-    color: white;
-    width: 237px;
-    height: 36px;
-    border-radius: 60px;
-	margin-bottom: 40px;
-	border: none;
 }
 
 .image-add {
@@ -499,6 +485,8 @@ button.confirm {
     align-items: center;
     justify-content: center;
 	margin-top: 40px;
+	position: relative;
+  	overflow: hidden;
 }
 
 .fa-2xl {
@@ -528,8 +516,49 @@ button.add-button {
 }
 
 .add-form {
-	display: flex;
-	flex-direction: column;
-	    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
     margin-bottom: 30px;
+    font-family: 'Work Sans';
+    font-size: 14px;
+    color: #3D3D3D;
+    gap: 10px;
+    font-weight: 500;
 }
+
+.add-form input, .add-form select {
+  	width: 420px; 
+  	height: 50px; 
+  	font-size: 16px; 
+  	font-family: 'Work Sans';
+  	border: none; 
+  	background-color: #FFFFFF;
+  	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09); 
+  	color: #3D3D3D; 
+}
+
+button.confirm {
+    background: #A7A7A7;
+    font-size: 14px;
+    font-family: 'Syne';
+    color: white;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+	margin-bottom: 40px;
+	border: none;
+	margin: auto;
+}
+
+#new-work {
+	display: none;
+}
+
+.image-add img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      
+  object-position: center;
+  display: block;   
+}     
