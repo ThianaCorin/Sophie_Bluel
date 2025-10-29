@@ -116,22 +116,33 @@ openModal.addEventListener("click", () => {
   loadWorksGallery();  
 })
 
-// Clique sur les croix pour fermer la modale
+// Clique sur les croix pour fermer la modale et revenir à la 1ere vue.
+function resetToFirstView() {
+  titreInput.value = "";
+  categorySelect.value = "";
+  imageInput.value = "";
+  showMiniature.innerHTML = "";
+  document.querySelector(".modal-delete").style.display = "flex";
+  document.querySelector(".modal-add").style.display = "none";
+}
+
 const closeButtons = document.querySelectorAll(".close");
 
 closeButtons.forEach(btn => {
   btn.addEventListener("click", () => {
         console.log("clic sur la croix")
+        resetToFirstView();
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
 })
 })
 
-// Clique à l'éxtérieur de la modale pour la fermer
+// Clique à l'éxtérieur de la modale pour la fermer et aussi revenir à la 1ere vue.
 const externalClick = document.querySelector(".modal")
 
 externalClick.addEventListener("click", () => {
   console.log("clic hors de la modale")
+  resetToFirstView();
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
 })
@@ -158,12 +169,23 @@ function loadWorksGallery() {
     image.src = work.imageUrl;  
     const trash = document.createElement("i")
     trash.classList.add("fa-solid", "fa-trash-can", "fa-xs")
+    trash.dataset.id = work.id;
 
     figure.appendChild(image);
     figure.appendChild(trash);
     modalGallery.appendChild(figure);
-  }
+  
+
+// Suppression d'un work
+trash.addEventListener ("click", (e) => {
+console.log ("suppression d'un work");
+
+
+})
+
 }
+}
+
 
 // Clique "ajouter une photo" pour afficher la 2ème Vue
 const addPhoto = document.querySelector(".add-photo")
@@ -193,6 +215,7 @@ arrowLeft.addEventListener("click", () => {
 // Ajout d'un nouveau WORK
 const addButton = document.getElementById("add-button")
 const imageInput = document.getElementById("new-work")
+const showMiniature = document.querySelector(".image-add");
 
   addButton.addEventListener("click", () => {
   console.log("clic pour ajouter photo");
@@ -227,12 +250,19 @@ const imageInput = document.getElementById("new-work")
   const miniature = document.createElement("img");
   miniature.src = imageURL;
 
-  const showMiniature = document.querySelector(".image-add");
   showMiniature.innerHTML = "";
   showMiniature.appendChild(miniature);
 
   const icone = document.querySelectorAll(".fa-image, .add-button, .info-message");
   icone.forEach(element => (element.style.display = "none"));
+
+
+  miniature.addEventListener("click", () => {
+  console.log("clic sur miniature → modification image");
+  document.getElementById("error-img").innerHTML = "";
+  imageInput.value = ""; // réinitialise pour pouvoir choisir un autre fichier
+  imageInput.click();    // rouvre le sélecteur de fichiers
+});
 });
 
 // Récupèrer les catégories via l'API
@@ -264,12 +294,13 @@ for (let i = 0; i < categories.length; i++) {
     select.appendChild(option);
 }}
 
-// --- RÉFÉRENCES DES ÉLÉMENTS ---
+// Vérification du formulaire avant envoi (bouton Valider en vert)
+// trim = enlève les espaces vides
+
 const titreInput = document.getElementById("titre");
 const categorySelect = document.getElementById("category");
 const confirmButton = document.querySelector(".confirm");
 
-// --- FONCTION DE VÉRIFICATION ---
 function checkFormCompletion() {
   const titre = titreInput.value.trim();
   const category = categorySelect.value;
@@ -282,16 +313,18 @@ function checkFormCompletion() {
   }
 }
 
-// --- ÉCOUTEURS ---
+// On écoute et teste chaque changement du formulaire:
+
 titreInput.addEventListener("input", checkFormCompletion);
 categorySelect.addEventListener("change", checkFormCompletion);
 imageInput.addEventListener("change", checkFormCompletion);
 
 
-// --- VALIDATION FINALE DU FORMULAIRE ---
+// Validation du formulaire:
+
 const form = document.querySelector(".add-form");
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   const titre = titreInput.value.trim();
   const category = categorySelect.value;
   const image = imageInput.files[0];
@@ -301,10 +334,42 @@ form.addEventListener("submit", (e) => {
     document.getElementById("error-img").innerText =
       "Veuillez remplir tous les champs avant de valider.";
   } else {
-    console.log("Formulaire prêt à être envoyé !");
-    document.getElementById("error-img").innerText = "";
-  }
-})
+    // Envoi du nouveau work à l'API
+    e.preventDefault();
+    const formData = new FormData();
+          formData.append("title", titre);
+          formData.append("category", category);
+          formData.append("image", image);
+      document.getElementById("error-img").innerText = "";
+      for (let pair of formData.entries()) {
+  console.log(pair[0] + ":", pair[1]);
+}
+        const response = await fetch("http://localhost:5678/api/works", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token},
+          body: formData,
+ });
+ const data = await response.json()
+
+    if (response.status === 201) {
+        console.log ("newWork envoyé");
+        
+       // Recharger les works
+        await fetchWorks();
+
+        // Fermer la modale proprement
+        resetToFirstView();
+      document.querySelector(".modal").style.display = "none";
+      
+} else {
+    document.getElementById("error-img").innerText = "Une erreur est survenue, veuillez réessayer.";
+    }
+}
+
+ });
+
+    
+
 
 
 
