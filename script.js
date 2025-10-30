@@ -177,14 +177,19 @@ function loadWorksGallery() {
   
 
 // Suppression d'un work
-trash.addEventListener ("click", (e) => {
-console.log ("suppression d'un work");
+trash.addEventListener ("click", async (e) => {
 
-
+const response = await fetch(`http://localhost:5678/api/works/${work.id}`, {
+          method: "DELETE",
+          headers: { "Authorization": "Bearer " + token},      
 })
 
+if (response.ok) {
+  await fetchWorks();
+  await loadWorksGallery();
 }
-}
+})
+  }}
 
 
 // Clique "ajouter une photo" pour afficher la 2ème Vue
@@ -369,9 +374,5 @@ form.addEventListener("submit", async (e) => {
  });
 
     
-
-
-
-
 
 })
