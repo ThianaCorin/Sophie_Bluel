@@ -13,8 +13,7 @@ export function ajoutListenerLogin() {
 
     form.addEventListener("submit", async function(event) {
         event.preventDefault();
-        console.log("formulaire soumis !");
-
+        
     // ==========================
     // Création de l'objet envoyé par le formulaire
     // ==========================

@@ -96,7 +96,6 @@ loginLogout.removeAttribute("href");
 
 // Logout du SubmitEvent, on enlève le token
 loginLogout.addEventListener("click", () => {
-  console.log("logout en cours");
   localStorage.removeItem("token");
   window.location.href = "index.html";
 
@@ -109,7 +108,6 @@ loginLogout.addEventListener("click", () => {
 const openModal = document.querySelector(".modifier button")
 
 openModal.addEventListener("click", () => {
-  console.log("click modal ok")
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "block";
   // on appelle la fonction pour faire apparaitre les miniatures
@@ -130,7 +128,6 @@ const closeButtons = document.querySelectorAll(".close");
 
 closeButtons.forEach(btn => {
   btn.addEventListener("click", () => {
-        console.log("clic sur la croix")
         resetToFirstView();
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
@@ -141,7 +138,6 @@ closeButtons.forEach(btn => {
 const externalClick = document.querySelector(".modal")
 
 externalClick.addEventListener("click", () => {
-  console.log("clic hors de la modale")
   resetToFirstView();
   const modaleBackground = document.querySelector(".modal")
   modaleBackground.style.display = "none";
@@ -151,7 +147,6 @@ externalClick.addEventListener("click", () => {
 const internalClick = document.querySelector(".modal-content")
 
 internalClick.addEventListener("click", (e) => {
-  console.log("clic dans de la modale")
   e.stopPropagation()
 })
 
@@ -196,7 +191,6 @@ if (response.ok) {
 const addPhoto = document.querySelector(".add-photo")
 
 addPhoto.addEventListener("click", () => {
-  console.log("clic ajouter une photo")
   const modaleDelete = document.querySelector(".modal-delete")
   modaleDelete.style.display = "none";
   const modalAdd = document.querySelector(".modal-add")
@@ -223,7 +217,6 @@ const imageInput = document.getElementById("new-work")
 const showMiniature = document.querySelector(".image-add");
 
   addButton.addEventListener("click", () => {
-  console.log("clic pour ajouter photo");
   document.getElementById("error-img").innerHTML = "";
     imageInput.click()
 });
@@ -263,7 +256,6 @@ const showMiniature = document.querySelector(".image-add");
 
 
   miniature.addEventListener("click", () => {
-  console.log("clic sur miniature → modification image");
   document.getElementById("error-img").innerHTML = "";
   imageInput.value = ""; // réinitialise pour pouvoir choisir un autre fichier
   imageInput.click();    // rouvre le sélecteur de fichiers
@@ -347,7 +339,6 @@ form.addEventListener("submit", async (e) => {
           formData.append("image", image);
       document.getElementById("error-img").innerText = "";
       for (let pair of formData.entries()) {
-  console.log(pair[0] + ":", pair[1]);
 }
         const response = await fetch("http://localhost:5678/api/works", {
           method: "POST",
@@ -357,8 +348,7 @@ form.addEventListener("submit", async (e) => {
  const data = await response.json()
 
     if (response.status === 201) {
-        console.log ("newWork envoyé");
-        
+                
        // Recharger les works
         await fetchWorks();
 
@@ -371,8 +361,6 @@ form.addEventListener("submit", async (e) => {
     }
 }
 
- });
-
-    
+ });  
 
 })
