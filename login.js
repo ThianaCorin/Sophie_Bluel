@@ -8,45 +8,45 @@ export function ajoutListenerLogin() {
     const form = document.getElementById('login-form');
 
     form.addEventListener("input", () => {
-    document.getElementById("login-error").innerHTML = "";
+        document.getElementById("login-error").innerHTML = "";
     });
 
-    form.addEventListener("submit", async function(event) {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
-        
-    // ==========================
-    // Création de l'objet envoyé par le formulaire
-    // ==========================
 
-    const formLogin = {
-        email : event.target.querySelector("[name=email]").value,
-        password : event.target.querySelector("[name=password]").value
-    };
+        // ==========================
+        // Création de l'objet envoyé par le formulaire
+        // ==========================
 
-    // ==========================
-    // Création de la charge utile json
-    // ==========================
+        const formLogin = {
+            email: event.target.querySelector("[name=email]").value,
+            password: event.target.querySelector("[name=password]").value
+        };
 
-    const chargeUtile = JSON.stringify(formLogin);
+        // ==========================
+        // Création de la charge utile json
+        // ==========================
 
-    // ==========================
-    // Appel de la fonction fetch 
-    // ==========================
+        const chargeUtile = JSON.stringify(formLogin);
 
-    const response = await fetch("http://localhost:5678/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: chargeUtile,
-    });
+        // ==========================
+        // Appel de la fonction fetch 
+        // ==========================
 
-    const data = await response.json()
+        const response = await fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: chargeUtile,
+        });
 
-    if (response.status === 200) {
-    localStorage.setItem("token", data.token);
-    window.location.href = "index.html";
-    } else {
-    document.getElementById("login-error").innerHTML = "Erreur dans l’identifiant ou le mot de passe.";
-    }
+        const data = await response.json()
+
+        if (response.status === 200) {
+            localStorage.setItem("token", data.token);
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("login-error").innerHTML = "Erreur dans l’identifiant ou le mot de passe.";
+        }
     });
 }
 
